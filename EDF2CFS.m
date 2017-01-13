@@ -12,13 +12,12 @@
 % OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 % THE SOFTWARE.
 function EDF2CFS(filepath)
-    if(nargin == 1),
-        [path,filename,ext] = fileparts(filepath);
-        filename = [filename ext];
-    else
+    if(nargin ~= 1),
         [filename,path,~] = uigetfile('*.edf');
+        filepath = fullfile(path,filename);
     end
-    [header, signalHeader, signalCell] = blockEdfLoad([path '/' filename]);
+    [path,filename,~] = fileparts(filepath);
+    [header, signalHeader, signalCell] = blockEdfLoad([path '/' filename '.edf']);
     N = numel(signalHeader);
     disp('Here are all the channels:');
     for k=1:N,
